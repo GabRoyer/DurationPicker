@@ -68,28 +68,41 @@ public struct DurationPickerView: UIViewRepresentable {
     timeDurationPicker.minimumDuration = minumumDuration
     timeDurationPicker.maximumDuration = maximumDuration
     
-    timeDurationPicker.addTarget(context.coordinator, action: #selector(Coordinator.changed(_:)), for: .valueChanged)
+    timeDurationPicker.addTarget(context.coordinator, action: #selector(Coordinator.changed(_:)), for: .primaryActionTriggered)
     return timeDurationPicker
   }
 
   // This has to be public to comply with UIViewRepresentable, but we don't actually want it to show up in the doc.
   @_documentation(visibility: internal)
   public func updateUIView(_ uiView: DurationPicker, context: Context) {
-    uiView.duration = duration
-    uiView.pickerMode = mode
-    uiView.hourInterval = hourInterval
-    uiView.minuteInterval = minuteInterval
-    uiView.secondInterval = secondInterval
-    uiView.minimumDuration = minumumDuration
-    uiView.maximumDuration = maximumDuration
+    if (uiView.duration != duration) {
+      uiView.duration = duration
+    }
+    if (uiView.pickerMode != mode) {
+      uiView.pickerMode = mode
+    }
+    if (uiView.hourInterval != hourInterval) {
+      uiView.hourInterval = hourInterval
+    }
+    if (uiView.minuteInterval != minuteInterval) {
+      uiView.minuteInterval = minuteInterval
+    }
+    if (uiView.secondInterval != secondInterval) {
+      uiView.secondInterval = secondInterval
+    }
+    if (uiView.minimumDuration != minumumDuration) {
+      uiView.minimumDuration = minumumDuration
+    }
+    if (uiView.maximumDuration != maximumDuration) {
+      uiView.maximumDuration = maximumDuration
+    }
   }
 
   // This has to be public to comply with UIViewRepresentable, but we don't actually want it to show up in the doc.
   @_documentation(visibility: internal)
   public func makeCoordinator() -> DurationPickerView.Coordinator {
-      Coordinator(duration: $duration)
+    return Coordinator(duration: $duration)
   }
-
   
   // This has to be public to comply with UIViewRepresentable, but we don't actually want it to show up in the doc.
   @_documentation(visibility: internal)
@@ -97,7 +110,7 @@ public struct DurationPickerView: UIViewRepresentable {
     private var duration: Binding<TimeInterval>
 
     init(duration: Binding<TimeInterval>) {
-        self.duration = duration
+      self.duration = duration
     }
 
     @objc func changed(_ sender: DurationPicker) {
