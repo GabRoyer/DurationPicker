@@ -12,13 +12,21 @@ let package = Package(
     .library(
       name: "DurationPicker",
       targets: ["DurationPicker"]),
+    .library(
+      name: "DurationPickerSwiftUI",
+      targets: ["DurationPickerSwiftUI"]),
   ],
   dependencies: [],
   targets: [
     .target(
       name: "DurationPicker",
       dependencies: []),
+    .target(
+      name: "DurationPickerSwiftUI",
+      dependencies: ["DurationPicker"]
+    ),
     .testTarget(
       name: "DurationPickerTests",
       dependencies: ["DurationPicker"]),
+
   ])
