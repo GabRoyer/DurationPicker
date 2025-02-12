@@ -27,8 +27,9 @@ import DurationPicker
 ///
 /// You can use a duration picker to allow a user to enter a time interval between 0 and 24 hours.
 public struct DurationPickerView: UIViewRepresentable {
-  public init(duration: Binding<TimeInterval>, hourInterval: Int = 1, minuteInterval: Int = 1, secondInterval: Int = 1, minumumDuration: TimeInterval? = nil, maximumDuration: TimeInterval? = nil) {
+  public init(_ duration: Binding<TimeInterval>, components: Components = .hourMinuteSecond, hourInterval: Int = 1, minuteInterval: Int = 1, secondInterval: Int = 1, minumumDuration: TimeInterval? = nil, maximumDuration: TimeInterval? = nil) {
     self._duration = duration
+    self.mode = components
     self.hourInterval = hourInterval
     self.minuteInterval = minuteInterval
     self.secondInterval = secondInterval
@@ -40,14 +41,14 @@ public struct DurationPickerView: UIViewRepresentable {
   @_documentation(visibility: internal)
   public typealias UIViewType = DurationPicker
   
-  /// The mode displayed by the duration picker.
+  /// The componentns displayed by the duration picker.
   ///
   /// The mode determines which combination of hours, minutes, and seconds are displayed. You can set and retrieve the mode value through the ``DurationPicker/pickerMode`` property.
-  public typealias Mode = DurationPicker.Mode
+  public typealias Components = DurationPicker.Mode
     
   @Binding private var duration: TimeInterval
   
-  @Environment(\.durationPickerMode) private var mode
+  private var mode: Components
   
   private var hourInterval: Int
   private var minuteInterval: Int
@@ -108,7 +109,7 @@ public struct DurationPickerView: UIViewRepresentable {
 @available(iOS 17.0,*)
 #Preview {
   @Previewable @State var duration: TimeInterval = 60.0 * 30.0
-  @Previewable @State var mode: DurationPickerView.Mode = .hourMinuteSecond
+  @Previewable @State var components: DurationPickerView.Components = .hourMinuteSecond
   @Previewable @State var minimumDuration: TimeInterval? = nil
   @Previewable @State var maximumDuration: TimeInterval? = nil
   @Previewable @State var hourInterval: Int = 1
@@ -116,17 +117,18 @@ public struct DurationPickerView: UIViewRepresentable {
   @Previewable @State var secondInterval: Int = 1
 
   // Can't make it case iterable since its defined as an extension.
-  let modes: [DurationPickerView.Mode] = [.hour, .hourMinute, .hourMinuteSecond, .minute, .minuteSecond, .second]
+  let modes: [DurationPickerView.Components] = [.hour, .hourMinute, .hourMinuteSecond, .minute, .minuteSecond, .second]
   
   List {
     DurationPickerView(
-      duration: $duration,
+      $duration,
+      components: components,
       hourInterval: hourInterval,
       minuteInterval: minuteInterval,
       secondInterval: secondInterval,
       minumumDuration: minimumDuration,
       maximumDuration: maximumDuration
-    ).durationPickerMode(mode)
+    )
     
     LabeledContent {
       Text(Date()..<Date().addingTimeInterval(duration), format: .timeDuration)
@@ -134,7 +136,7 @@ public struct DurationPickerView: UIViewRepresentable {
       Text("Value")
     }
     
-    Picker("Mode", selection: $mode) {
+    Picker("Components", selection: $components) {
       ForEach(modes, id: \.self) { mode in
         Text(String(describing: mode))
       }
