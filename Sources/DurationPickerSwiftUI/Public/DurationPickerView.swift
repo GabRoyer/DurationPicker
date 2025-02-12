@@ -41,7 +41,7 @@ public struct DurationPickerView: UIViewRepresentable {
   @_documentation(visibility: internal)
   public typealias UIViewType = DurationPicker
   
-  /// The componentns displayed by the duration picker.
+  /// The components displayed by the duration picker.
   ///
   /// The mode determines which combination of hours, minutes, and seconds are displayed. You can set and retrieve the mode value through the ``DurationPicker/pickerMode`` property.
   public typealias Components = DurationPicker.Mode
