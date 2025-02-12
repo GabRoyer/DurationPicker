@@ -28,5 +28,4 @@ let package = Package(
     .testTarget(
       name: "DurationPickerTests",
       dependencies: ["DurationPicker"]),
-
   ])
