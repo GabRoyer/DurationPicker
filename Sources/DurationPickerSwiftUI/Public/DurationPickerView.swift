@@ -23,7 +23,7 @@
 import SwiftUI
 import DurationPicker
 
-/// A customizable control for inputting time values ranging between 0 and 24 hours. It serves as a drop-in replacement of [DatePicker](https://developer.apple.com/documentation/swiftui/datepicker) with [hourMinuteAndSecond](https://developer.apple.com/documentation/swiftui/datepickercomponents/hourminuteandsecond) displayed components with additional functionality for time input.
+/// A customizable control for inputting time values ranging between 0 and 24 hours. It serves as a drop-in replacement of [UIDatePicker](https://developer.apple.com/documentation/uikit/uidatepicker) with [countDownTimer](https://developer.apple.com/documentation/uikit/uidatepicker/mode/countdowntimer) mode with additional functionality for time input.
 ///
 /// You can use a duration picker to allow a user to enter a time interval between 0 and 24 hours.
 public struct DurationPickerView: UIViewRepresentable {
@@ -43,7 +43,7 @@ public struct DurationPickerView: UIViewRepresentable {
   
   /// The components displayed by the duration picker.
   ///
-  /// The mode determines which combination of hours, minutes, and seconds are displayed. You can set and retrieve the mode value through the ``DurationPicker/pickerMode`` property.
+  /// The mode determines which combination of hours, minutes, and seconds are displayed. You can set and retrieve the mode value through the ``DurationPickerView/mode`` property.
   public typealias Components = DurationPicker.Mode
     
   @Binding private var duration: TimeInterval
